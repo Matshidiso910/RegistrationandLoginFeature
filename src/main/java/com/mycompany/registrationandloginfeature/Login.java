@@ -60,4 +60,49 @@ public class Login {
         return username.contains("_") && username.length() <= 5;
     }
     
+ 
+      public boolean checkPasswordComplexity() {
+        boolean hasUpperCase = false;
+        boolean hasDigit = false;
+        boolean hasSpecialChar = false;
+        
+        if (password.length() < 8) {
+            return false;
+        }
+        
+        for (char c : password.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                hasUpperCase = true;
+            } else if (Character.isDigit(c)) {
+                hasDigit = true;
+            } else if (!Character.isLetterOrDigit(c)) {
+                hasSpecialChar = true;
+            }
+        }
+        
+        return hasUpperCase && hasDigit && hasSpecialChar;
+    }
+    
+    public boolean checkCellPhoneNumber() {
+        String cleanedNumber = cellPhoneNumber.replaceAll("[\\s\\-()]", "");
+        Pattern pattern = Pattern.compile("^\\+27\\d{9}$");
+        Matcher matcher = pattern.matcher(cleanedNumber);
+        return matcher.matches();
+    }
+    
+    public String registerUser() {
+        if (!checkUserName()) {
+            return "Username is not correctly formatted, please ensure that your username contains an underscore and is no more than 5 characters in length.";
+        }
+        
+        if (!checkPasswordComplexity()) {
+            return "Password is not correctly formatted, please ensure that the password contains at least 8 characters, a capital letter, a number and a special character.";
+        }
+        
+        if (!checkCellPhoneNumber()) {
+            return "Cell phone number is incorrectly formatted or does not contain an international code, please correct the number and try again.";
+        }
+        
+        return "Registration successful.";
+    }
 }
