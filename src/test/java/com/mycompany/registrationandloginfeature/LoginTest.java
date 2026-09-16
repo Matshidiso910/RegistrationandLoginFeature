@@ -38,4 +38,70 @@ public class LoginTest {
         assertTrue(login.checkPasswordComplexity());
     }
     
+    @Test
+    public void testPasswordDoesNotMeetComplexity() {
+        Login login = new Login("Kyle", "Smith", "kyl_1", "password", "+27838968976");
+        assertFalse(login.checkPasswordComplexity());
+    }
+    
+    @Test
+    public void testCellPhoneCorrectlyFormatted() {
+        Login login = new Login("Kyle", "Smith", "kyl_1", "Ch&&sec@ke99!", "+27838968976");
+        assertTrue(login.checkCellPhoneNumber());
+    }
+    
+    @Test
+    public void testCellPhoneIncorrectlyFormatted() {
+        Login login = new Login("Kyle", "Smith", "kyl_1", "Ch&&sec@ke99!", "08966553");
+        assertFalse(login.checkCellPhoneNumber());
+    }
+    
+    @Test
+    public void testLoginSuccessful() {
+        Login login = new Login("Kyle", "Smith", "kyl_1", "Ch&&sec@ke99!", "+27838968976");
+        assertTrue(login.loginUser("kyl_1", "Ch&&sec@ke99!"));
+    }
+    
+    @Test
+    public void testLoginFailed() {
+        Login login = new Login("Kyle", "Smith", "kyl_1", "Ch&&sec@ke99!", "+27838968976");
+        assertFalse(login.loginUser("kyl_1", "wrongpassword"));
+    }
+    
+    @Test
+    public void testUsernameCorrectlyFormattedTrue() {
+        Login login = new Login("Kyle", "Smith", "kyl_1", "Ch&&sec@ke99!", "+27838968976");
+        assertTrue(login.checkUserName());
+    }
+    
+    @Test
+    public void testUsernameIncorrectlyFormattedFalse() {
+        Login login = new Login("Kyle", "Smith", "kyle!!!!!!!", "Ch&&sec@ke99!", "+27838968976");
+        assertFalse(login.checkUserName());
+    }
+    
+    @Test
+    public void testPasswordMeetsComplexityTrue() {
+        Login login = new Login("Kyle", "Smith", "kyl_1", "Ch&&sec@ke99!", "+27838968976");
+        assertTrue(login.checkPasswordComplexity());
+    }
+    
+    @Test
+    public void testPasswordDoesNotMeetComplexityFalse() {
+        Login login = new Login("Kyle", "Smith", "kyl_1", "password", "+27838968976");
+        assertFalse(login.checkPasswordComplexity());
+    }
+    
+    @Test
+    public void testCellPhoneCorrectlyFormattedTrue() {
+        Login login = new Login("Kyle", "Smith", "kyl_1", "Ch&&sec@ke99!", "+27838968976");
+        assertTrue(login.checkCellPhoneNumber());
+    }
+    
+    @Test
+    public void testCellPhoneIncorrectlyFormattedFalse() {
+        Login login = new Login("Kyle", "Smith", "kyl_1", "Ch&&sec@ke99!", "08966553");
+        assertFalse(login.checkCellPhoneNumber());
+    }
 }
+
