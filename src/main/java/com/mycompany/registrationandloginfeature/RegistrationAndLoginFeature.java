@@ -100,5 +100,9 @@ public class RegistrationAndLoginFeature {
             System.out.println();
             System.out.println(user.returnLoginStatus(loginSuccessful));
         }
-     
+        System.out.println();
+        System.out.println("==================================================");
+        System.out.println("Thank you for using the system. Goodbye!");
+        System.out.println("==================================================");
+    }
     }
