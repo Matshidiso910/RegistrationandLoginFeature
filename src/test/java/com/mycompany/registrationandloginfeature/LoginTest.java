@@ -21,7 +21,7 @@ public class LoginTest {
         Login login = new Login("Kyle", "Smith", "kyl_1", "Ch&&sec@ke99!", "+27838968976");
         String expected = "Welcome Kyle, Smith it is great to see you again.";
         String actual = login.returnLoginStatus(true);
-        assertEquals(expected, actual);
+        assertEquals(expected, actual); // assertEquals used because we comparing text messages
     }
     
     @Test
@@ -29,79 +29,79 @@ public class LoginTest {
         Login login = new Login("Kyle", "Smith", "kyle!!!!!!!", "Ch&&sec@ke99!", "+27838968976");
         String expected = "Username is not correctly formatted, please ensure that your username contains an underscore and is no more than 5 characters in length.";
         String actual = login.registerUser();
-        assertEquals(expected, actual);
+        assertEquals(expected, actual); // assertEquals used because we checking exact error message
     }
     
     @Test
     public void testPasswordMeetsComplexity() {
         Login login = new Login("Kyle", "Smith", "kyl_1", "Ch&&sec@ke99!", "+27838968976");
-        assertTrue(login.checkPasswordComplexity());
+        assertTrue(login.checkPasswordComplexity()); // assertTrue used because method returns boolean true
     }
     
     @Test
     public void testPasswordDoesNotMeetComplexity() {
         Login login = new Login("Kyle", "Smith", "kyl_1", "password", "+27838968976");
-        assertFalse(login.checkPasswordComplexity());
+        assertFalse(login.checkPasswordComplexity()); // assertFalse used because method returns boolean false
     }
     
     @Test
     public void testCellPhoneCorrectlyFormatted() {
         Login login = new Login("Kyle", "Smith", "kyl_1", "Ch&&sec@ke99!", "+27838968976");
-        assertTrue(login.checkCellPhoneNumber());
+        assertTrue(login.checkCellPhoneNumber()); 
     }
     
     @Test
     public void testCellPhoneIncorrectlyFormatted() {
         Login login = new Login("Kyle", "Smith", "kyl_1", "Ch&&sec@ke99!", "08966553");
-        assertFalse(login.checkCellPhoneNumber());
+        assertFalse(login.checkCellPhoneNumber()); 
     }
     
     @Test
     public void testLoginSuccessful() {
         Login login = new Login("Kyle", "Smith", "kyl_1", "Ch&&sec@ke99!", "+27838968976");
-        assertTrue(login.loginUser("kyl_1", "Ch&&sec@ke99!"));
+        assertTrue(login.loginUser("kyl_1", "Ch&&sec@ke99!")); 
     }
     
     @Test
     public void testLoginFailed() {
         Login login = new Login("Kyle", "Smith", "kyl_1", "Ch&&sec@ke99!", "+27838968976");
-        assertFalse(login.loginUser("kyl_1", "wrongpassword"));
+        assertFalse(login.loginUser("kyl_1", "wrongpassword")); 
     }
     
     @Test
     public void testUsernameCorrectlyFormattedTrue() {
         Login login = new Login("Kyle", "Smith", "kyl_1", "Ch&&sec@ke99!", "+27838968976");
-        assertTrue(login.checkUserName());
+        assertTrue(login.checkUserName()); 
     }
     
     @Test
     public void testUsernameIncorrectlyFormattedFalse() {
         Login login = new Login("Kyle", "Smith", "kyle!!!!!!!", "Ch&&sec@ke99!", "+27838968976");
-        assertFalse(login.checkUserName());
+        assertFalse(login.checkUserName()); 
     }
     
     @Test
     public void testPasswordMeetsComplexityTrue() {
         Login login = new Login("Kyle", "Smith", "kyl_1", "Ch&&sec@ke99!", "+27838968976");
-        assertTrue(login.checkPasswordComplexity());
+        assertTrue(login.checkPasswordComplexity()); 
     }
     
     @Test
     public void testPasswordDoesNotMeetComplexityFalse() {
         Login login = new Login("Kyle", "Smith", "kyl_1", "password", "+27838968976");
-        assertFalse(login.checkPasswordComplexity());
+        assertFalse(login.checkPasswordComplexity()); // assertFalse used because method returns boolean false
     }
     
     @Test
     public void testCellPhoneCorrectlyFormattedTrue() {
         Login login = new Login("Kyle", "Smith", "kyl_1", "Ch&&sec@ke99!", "+27838968976");
-        assertTrue(login.checkCellPhoneNumber());
+        assertTrue(login.checkCellPhoneNumber()); // assertTrue used because method returns boolean true
     }
     
     @Test
     public void testCellPhoneIncorrectlyFormattedFalse() {
         Login login = new Login("Kyle", "Smith", "kyl_1", "Ch&&sec@ke99!", "08966553");
-        assertFalse(login.checkCellPhoneNumber());
+        assertFalse(login.checkCellPhoneNumber()); 
     }
 }
 
