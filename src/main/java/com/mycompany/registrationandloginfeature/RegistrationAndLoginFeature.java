@@ -6,46 +6,6 @@ package com.mycompany.registrationandloginfeature;
 
 import java.util.Scanner;
 
-/**
- * Project: Registration and Login Feature
- * Part: 1 of POE (Portfolio of Evidence)
- * 
- * @author Student
- * @version 1.0
- * @date 2024
- * 
- * REFERENCES AND ATTRIBUTIONS:
- * 
- * REFERENCE 1: Phone Number Validation Regex
- * Source: Stack Overflow
- * URL: https://stackoverflow.com/questions/123559/how-to-validate-phone-numbers-using-regex
- * Date Accessed: 2024
- * Accuracy: Community-verified with 900+ upvotes
- * 
- * REFERENCE 2: Password Security Guidelines
- * Source: OWASP (Open Web Application Security Project)
- * URL: https://owasp.org/www-community/password-special-characters
- * Date Accessed: 2024
- * Accuracy: Industry standard for security
- * 
- * REFERENCE 3: South African Phone Number Format
- * Source: ITU-T E.164 Recommendation
- * URL: https://www.itu.int/rec/T-REC-E.164-201011-I/
- * Date Accessed: 2024
- * Accuracy: Official UN standard
- * 
- * REFERENCE 4: Java Scanner Class
- * Source: Oracle Java Documentation
- * URL: https://docs.oracle.com/javase/8/docs/api/java/util/Scanner.html
- * Date Accessed: 2024
- * Accuracy: Official documentation
- * 
- * REFERENCE 5: Java Pattern and Matcher Classes
- * Source: Oracle Java Documentation
- * URL: https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html
- * Date Accessed: 2024
- * Accuracy: Official documentation
- */
 public class RegistrationAndLoginFeature {
 
     private Scanner input = new Scanner(System.in); // scanner for reading user input
