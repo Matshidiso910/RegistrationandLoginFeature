@@ -16,7 +16,6 @@ public class RegistrationAndLoginFeature {
         System.out.println();
         System.out.println("==================================================");
         System.out.println("WELCOME TO THE REGISTRATION AND LOGIN FEATURE");
-        System.out.println("Part 1 of POE");
         System.out.println("==================================================");
         
         System.out.print("\nEnter your first name: ");
