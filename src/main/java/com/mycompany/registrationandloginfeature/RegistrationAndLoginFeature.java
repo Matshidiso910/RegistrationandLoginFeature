@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class RegistrationAndLoginFeature {
 
-    private Scanner input = new Scanner(System.in); // scanner for reading user input
+    private Scanner input = new Scanner(System.in); //  scanner for reading user input
     
     public static void main(String[] args) {
         RegistrationAndLoginFeature system = new RegistrationAndLoginFeature(); 
