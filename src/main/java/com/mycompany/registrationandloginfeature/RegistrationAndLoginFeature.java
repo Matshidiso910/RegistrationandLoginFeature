@@ -65,14 +65,8 @@ public class RegistrationAndLoginFeature {
                 System.out.println("Welcome to QuickChat.");
                 System.out.println("==================================================");
                 
-                int numMessages = 0;
                 System.out.print("How many messages do you wish to enter? ");
-                try {
-                    numMessages = Integer.parseInt(system.input.nextLine());
-                } catch (NumberFormatException e) {
-                    System.out.println("Invalid number. Exiting.");
-                    return;
-                }
+                int numMessages = Integer.parseInt(system.input.nextLine()); // get number of messages from user
                 
                 boolean running = true;
                 while (running) {
@@ -85,38 +79,38 @@ public class RegistrationAndLoginFeature {
                     System.out.println("--------------------------------------------------");
                     System.out.print("Enter your choice: ");
                     
-                    String menuChoice = system.input.nextLine().trim();
+                    String menuChoice = system.input.nextLine().trim(); // get menu choice
                     
                     switch (menuChoice) {
                         case "1":
-                            for (int i = 0; i < numMessages; i++) {
+                            for (int i = 0; i < numMessages; i++) { // loop for each message
                                 System.out.println();
                                 System.out.println("--- Message " + (i + 1) + " of " + numMessages + " ---");
                                 
                                 System.out.print("Enter recipient cell number (format: +27XXXXXXXXX): ");
-                                String recipient = system.input.nextLine();
+                                String recipient = system.input.nextLine(); // get recipient
                                 
                                 System.out.print("Enter message (max 250 characters): ");
-                                String messageText = system.input.nextLine();
+                                String messageText = system.input.nextLine(); // get message text
                                 
-                                if (messageText.length() > 250) {
+                                if (messageText.length() > 250) { // check message length
                                     System.out.println("Please enter a message of less than 250 characters.");
-                                    i--;
+                                    i--; // retry this message
                                     continue;
                                 }
                                 
-                                Message msg = new Message(recipient, messageText);
+                                Message msg = new Message(recipient, messageText); // create Message object
                                 
-                                if (msg.checkMessageID()) {
+                                if (msg.checkMessageID()) { // check message ID length
                                     System.out.println("Message ID generated: " + msg.getMessageID());
                                 } else {
                                     System.out.println("Message ID is invalid.");
-                                    i--;
+                                    i--; // retry this message
                                     continue;
                                 }
                                 
-                                System.out.println(msg.checkRecipientCell());
-                                System.out.println("Message Hash: " + msg.getMessageHash());
+                                System.out.println(msg.checkRecipientCell()); // check recipient format
+                                System.out.println("Message Hash: " + msg.getMessageHash()); // display hash
                                 
                                 System.out.println();
                                 System.out.println("Choose an option:");
@@ -125,39 +119,61 @@ public class RegistrationAndLoginFeature {
                                 System.out.println("3) Store Message");
                                 System.out.print("Enter your choice: ");
                                 
-                                int sendChoice = 0;
-                                try {
-                                    sendChoice = Integer.parseInt(system.input.nextLine());
-                                } catch (NumberFormatException e) {
-                                    System.out.println("Invalid choice.");
-                                    i--;
-                                    continue;
-                                }
+                                String sendChoice = system.input.nextLine().trim(); // get send choice
                                 
-                                String result = msg.SentMessage(sendChoice);
-                                System.out.println(result);
-                                
-                                if (sendChoice == 1 || sendChoice == 3) {
-                                    System.out.println();
-                                    System.out.println("--- Message Details ---");
-                                    System.out.println("Message ID: " + msg.getMessageID());
-                                    System.out.println("Message Hash: " + msg.getMessageHash());
-                                    System.out.println("Recipient: " + msg.getRecipient());
-                                    System.out.println("Message: " + msg.getMessageText());
+                                switch (sendChoice) { // handle send/disregard/store
+                                    case "1": // SEND
+                                        System.out.println(msg.SentMessage(1));
+                                        System.out.println();
+                                        System.out.println("--- Message Details ---");
+                                        System.out.println("Message ID: " + msg.getMessageID());
+                                        System.out.println("Message Hash: " + msg.getMessageHash());
+                                        System.out.println("Recipient: " + msg.getRecipient());
+                                        System.out.println("Message: " + msg.getMessageText());
+                                        break;
+                                    
+                                    case "2": // DISREGARD
+                                        System.out.println(msg.SentMessage(2));
+                                        System.out.print("Enter 0 to delete the message: "); // prompt for 0
+                                        String deleteChoice = system.input.nextLine().trim();
+                                        switch (deleteChoice) { // handle delete choice
+                                            case "0":
+                                                System.out.println("Message deleted.");
+                                                break;
+                                            default:
+                                                System.out.println("Message kept.");
+                                                break;
+                                        }
+                                        break;
+                                    
+                                    case "3": // STORE
+                                        System.out.println(msg.SentMessage(3));
+                                        System.out.println();
+                                        System.out.println("--- Message Details ---");
+                                        System.out.println("Message ID: " + msg.getMessageID());
+                                        System.out.println("Message Hash: " + msg.getMessageHash());
+                                        System.out.println("Recipient: " + msg.getRecipient());
+                                        System.out.println("Message: " + msg.getMessageText());
+                                        break;
+                                    
+                                    default: // INVALID
+                                        System.out.println("Invalid choice.");
+                                        i--; // retry this message
+                                        break;
                                 }
                             }
                             
                             System.out.println();
-                            System.out.println("Total messages sent: " + Message.totalMessages);
+                            System.out.println("Total messages sent: " + Message.totalMessages); // show total
                             break;
                         
                         case "2":
-                            System.out.println("Coming Soon.");
+                            System.out.println("Coming Soon."); // feature in development
                             break;
                         
                         case "3":
                             System.out.println("Thank you for using QuickChat. Goodbye!");
-                            running = false;
+                            running = false; // exit the loop
                             break;
                         
                         default:
