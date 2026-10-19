@@ -47,3 +47,17 @@
   "recipient": "+27838884567",
   "message": "do you go"
 }
+{
+  "id": "9656114471",
+  "messageNumber": 1,
+  "hash": "96:1:GOOUT",
+  "recipient": "+27456785531",
+  "message": "Go out "
+}
+{
+  "id": "5324650486",
+  "messageNumber": 0,
+  "hash": "53:0:HIMIKE",
+  "recipient": "+27718693002",
+  "message": "Hi Mike"
+}
