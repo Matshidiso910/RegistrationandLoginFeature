@@ -55,7 +55,7 @@ public class MessageTest {
 
     @Test
     public void testSentMessageSend() {
-        Message msg = new Message("+27718693002", "Hi Mike");
+        Message msg = new Message("+27718693002", "Hi Mike"); // comment
         assertEquals("Message successfully sent.", msg.SentMessage(1));
     }
 
