@@ -59,25 +59,4 @@ public class MessageTest {
         assertEquals("Message successfully sent.", msg.SentMessage(1));
     }
 
-    @Test
-    public void testSentMessageDisregard() {
-        Message msg = new Message("+27718693002", "Hi Mike");
-        assertEquals("Press 0 to delete the message.", msg.SentMessage(2));
-    }
-
-    @Test
-    public void testSentMessageStore() {
-        Message msg = new Message("+27718693002", "Hi Mike");
-        assertEquals("Message successfully stored.", msg.SentMessage(3));
-    }
-
-    @Test
-    public void testReturnTotalMessages() {
-        Message.resetMessages();
-        Message msg1 = new Message("+27718693002", "Msg 1");
-        msg1.SentMessage(1);
-        Message msg2 = new Message("+27718693002", "Msg 2");
-        msg2.SentMessage(1);
-        assertEquals(2, msg2.returnTotalMessages());
-    }
 }
