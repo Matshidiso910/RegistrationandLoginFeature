@@ -68,3 +68,59 @@
   "recipient": "+27718693002",
   "message": "Hi Mike"
 }
+{
+  "id": "4365917077",
+  "messageNumber": 0,
+  "hash": "43:0:HIMIKE",
+  "recipient": "+27718693002",
+  "message": "Hi Mike"
+}
+{
+  "id": "4603282715",
+  "messageNumber": 1,
+  "hash": "46:1:DOPINEAPPLES",
+  "recipient": "+27456987123",
+  "message": "do you like pineapples ?"
+}
+{
+  "id": "4359108195",
+  "messageNumber": 1,
+  "hash": "43:1:BBYEBBYE",
+  "recipient": "+27896532147",
+  "message": "bBYE!!"
+}
+{
+  "id": "4482202118",
+  "messageNumber": 2,
+  "hash": "44:2:IOUT",
+  "recipient": "+27451236987",
+  "message": "I think im crashing out.."
+}
+{
+  "id": "8711330569",
+  "messageNumber": 1,
+  "hash": "87:1:IMYOU",
+  "recipient": "+27789456123",
+  "message": "Im done here,thank you."
+}
+{
+  "id": "3704297232",
+  "messageNumber": 1,
+  "hash": "37:1:BYEBYE",
+  "recipient": "+27894561232",
+  "message": "bye"
+}
+{
+  "id": "7967427018",
+  "messageNumber": 1,
+  "hash": "79:1:BYEBYE",
+  "recipient": "+27145632987",
+  "message": "BYE "
+}
+{
+  "id": "3414347031",
+  "messageNumber": 2,
+  "hash": "34:2:IMHERE",
+  "recipient": "+27369852147",
+  "message": "im done here !!"
+}
