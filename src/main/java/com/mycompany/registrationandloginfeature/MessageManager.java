@@ -4,6 +4,10 @@
  */
 package com.mycompany.registrationandloginfeature;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
 /**
  *
  * @author Student
