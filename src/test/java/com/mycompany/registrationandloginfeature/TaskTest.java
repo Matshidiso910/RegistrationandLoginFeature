@@ -84,5 +84,19 @@ public class TaskTest {
         
         assertTrue(deleteResult.contains("successfully deleted"), "The system should confirm deletion.");
         assertEquals(0, MessageManager.storedCount, "The stored count should be 0 after deletion.");
-    
+    }
+
+    @Test
+    public void testDisplayReport() {
+        Message msg1 = new Message("+27834557896", "Did you get the cake?", "1111111111");
+        MessageManager.addMessage("Sent", msg1.getMessageID(), msg1.getMessageHash(), msg1.getRecipient(), msg1.getMessageText());
+        
+        String report = MessageManager.displayReport();
+        
+        assertTrue(report.contains("[SENT]"), "Report should indicate it is a sent message.");
+        assertTrue(report.contains("Did you get the cake?"), "Report should contain the message text.");
+        assertTrue(report.contains("+27834557896"), "Report should contain the recipient.");
+        assertTrue(report.contains(msg1.getMessageHash()), "Report should contain the message hash.");
+    }
+}
 
