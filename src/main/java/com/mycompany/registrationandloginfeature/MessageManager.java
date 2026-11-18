@@ -223,17 +223,5 @@ public class MessageManager {
         return report;
     }
 
-    public static void resetArrays() {
-        sentCount = 0;
-        disregardCount = 0;
-        storedCount = 0;
-        for (int i = 0; i < 100; i++) {
-            sentMessages[i] = null;
-            disregardedMessages[i] = null;
-            storedMessages[i] = null;
-            messageHashes[i] = null;
-            messageIDs[i] = null;
-            messageRecipients[i] = null;
-        }
-    }
+  
 }
