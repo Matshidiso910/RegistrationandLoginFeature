@@ -10,7 +10,7 @@ package com.mycompany.registrationandloginfeature;
  */
 public class MessageManager {
    
-
+   
     public static String[] sentMessages = new String[100];
     public static String[] disregardedMessages = new String[100];
     public static String[] storedMessages = new String[100];
@@ -22,7 +22,9 @@ public class MessageManager {
     public static int disregardCount = 0;
     public static int storedCount = 0;
 
-    // --- ADD METHODS ---
+    public static final String JSON_FILE = "messages.json";
+
+    // --- ADD METHODS & JSON SAVING ---
     
     public static void addMessage(String type, String id, String hash, String recipient, String text) {
         if (type.equals("Sent")) {
@@ -41,33 +43,104 @@ public class MessageManager {
             disregardedMessages[disregardCount] = text;
             disregardCount++;
         }
+        saveMessagesToJson(); // Save to file every time a message is added
     }
+
+    // --- JSON FILE WRITING ---
+    public static void saveMessagesToJson() {
+        try (FileWriter writer = new FileWriter(JSON_FILE)) {
+            writer.write("[\n");
+            boolean first = true;
+            
+            // Write Sent Messages
+            for (int i = 0; i < sentCount; i++) {
+                if (!first) writer.write(",\n");
+                writer.write("  {\"type\":\"Sent\", \"id\":\"" + messageIDs[i] + "\", \"hash\":\"" + messageHashes[i] + "\", \"recipient\":\"" + messageRecipients[i] + "\", \"message\":\"" + sentMessages[i] + "\"}");
+                first = false;
+            }
+            // Write Stored Messages
+            for (int i = 0; i < storedCount; i++) {
+                if (!first) writer.write(",\n");
+                writer.write("  {\"type\":\"Stored\", \"id\":\"" + messageIDs[i] + "\", \"hash\":\"" + messageHashes[i] + "\", \"recipient\":\"" + messageRecipients[i] + "\", \"message\":\"" + storedMessages[i] + "\"}");
+                first = false;
+            }
+            
+            writer.write("\n]");
+        } catch (IOException e) {
+            System.out.println("Error saving to JSON file: " + e.getMessage());
+        }
+    }
+
+    // --- JSON FILE READING (Requirement from Part 3) ---
+    // This loads the data from the file back into the arrays when the program starts
+    public static void loadMessagesFromJson() {
+        File file = new File(JSON_FILE);
+        if (!file.exists()) return;
+
+        resetArrays(); // Clear existing arrays before loading
+
+        try (Scanner scanner = new Scanner(file)) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                // Simple parsing for the JSON format we just wrote
+                if (line.contains("\"type\":\"Sent\"")) {
+                    String id = extractValue(line, "id");
+                    String hash = extractValue(line, "hash");
+                    String recipient = extractValue(line, "recipient");
+                    String msg = extractValue(line, "message");
+                    messageIDs[sentCount] = id;
+                    messageHashes[sentCount] = hash;
+                    messageRecipients[sentCount] = recipient;
+                    sentMessages[sentCount] = msg;
+                    sentCount++;
+                } else if (line.contains("\"type\":\"Stored\"")) {
+                    String id = extractValue(line, "id");
+                    String hash = extractValue(line, "hash");
+                    String recipient = extractValue(line, "recipient");
+                    String msg = extractValue(line, "message");
+                    messageIDs[storedCount] = id;
+                    messageHashes[storedCount] = hash;
+                    messageRecipients[storedCount] = recipient;
+                    storedMessages[storedCount] = msg;
+                    storedCount++;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error reading JSON file: " + e.getMessage());
+        }
+    }
+
+    // Helper method to extract values from the JSON string
+    private static String extractValue(String line, String key) {
+        String searchKey = "\"" + key + "\":\"";
+        int start = line.indexOf(searchKey) + searchKey.length();
+        int end = line.indexOf("\"", start);
+        return line.substring(start, end);
+    }
+
 
     // --- SEARCH & REPORT METHODS ---
 
-    // 1. Display all stored messages
     public static String displayStoredMessages() {
         if (storedCount == 0) return "No stored messages.";
         String output = "";
         for (int i = 0; i < storedCount; i++) {
-            output += "Message: " + storedMessages[i] + "\n";
+            output += "Sender: You | Recipient: " + messageRecipients[i] + " | Message: " + storedMessages[i] + "\n";
         }
         return output;
     }
 
-    // 2. Display longest message
     public static String displayLongestMessage() {
         if (storedCount == 0) return "No stored messages.";
         String longest = "";
         for (int i = 0; i < storedCount; i++) {
-            if (storedMessages[i].length() > longest.length()) {
+            if (storedMessages[i] != null && storedMessages[i].length() > longest.length()) {
                 longest = storedMessages[i];
             }
         }
         return longest;
     }
 
-    // 3. Search by Message ID
     public static String searchByMessageID(String id) {
         for (int i = 0; i < sentCount; i++) {
             if (messageIDs[i] != null && messageIDs[i].equals(id)) {
@@ -82,7 +155,6 @@ public class MessageManager {
         return "Message ID not found.";
     }
 
-    // 4. Search by Recipient
     public static String searchByRecipient(String recipient) {
         String result = "";
         for (int i = 0; i < sentCount; i++) {
@@ -98,7 +170,6 @@ public class MessageManager {
         return result.isEmpty() ? "No messages found for this recipient." : result;
     }
 
-    // 5. Delete by Hash
     public static String deleteMessageByHash(String hash) {
         for (int i = 0; i < sentCount; i++) {
             if (messageHashes[i] != null && messageHashes[i].equals(hash)) {
@@ -110,6 +181,7 @@ public class MessageManager {
                     messageRecipients[j] = messageRecipients[j + 1];
                 }
                 sentCount--;
+                saveMessagesToJson(); // Update file after deletion
                 return "Message: \"" + deletedMsg + "\" successfully deleted.";
             }
         }
@@ -123,25 +195,25 @@ public class MessageManager {
                     messageRecipients[j] = messageRecipients[j + 1];
                 }
                 storedCount--;
+                saveMessagesToJson(); // Update file after deletion
                 return "Message: \"" + deletedMsg + "\" successfully deleted.";
             }
         }
         return "Message hash not found.";
     }
 
-    // 6. Display Full Report
     public static String displayReport() {
         String report = "--- Full Message Report ---\n";
         if (sentCount == 0 && storedCount == 0) return report + "No messages to report.";
         
         for (int i = 0; i < sentCount; i++) {
             if (messageIDs[i] != null) {
-                report += "[SENT] Hash: " + messageHashes[i] + " | To: " + messageRecipients[i] + " | Message: " + sentMessages[i] + "\n";
+                report += "[SENT] Hash: " + messageHashes[i] + " | Recipient: " + messageRecipients[i] + " | Message: " + sentMessages[i] + "\n";
             }
         }
         for (int i = 0; i < storedCount; i++) {
             if (messageIDs[i] != null) {
-                report += "[STORED] Hash: " + messageHashes[i] + " | To: " + messageRecipients[i] + " | Message: " + storedMessages[i] + "\n";
+                report += "[STORED] Hash: " + messageHashes[i] + " | Recipient: " + messageRecipients[i] + " | Message: " + storedMessages[i] + "\n";
             }
         }
         return report;
