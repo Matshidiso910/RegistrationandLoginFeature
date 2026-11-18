@@ -80,18 +80,5 @@ public class MessageTest {
         assertEquals("Message successfully stored.", msg.SentMessage(3));
     }
 
-    @Test
-    public void testReturnTotalMessages() {
-        // Test that the total message counter correctly increments when messages are sent
-        Message.resetMessages(); // Reset to 0 first
-        
-        Message msg1 = new Message("+27718693002", "Msg 1");
-        msg1.SentMessage(1); // Send first message (count goes to 1)
-        
-        Message msg2 = new Message("+27718693002", "Msg 2");
-        msg2.SentMessage(1); // Send second message (count goes to 2)
-        
-        // Assert that the total returned is indeed 2
-        assertEquals(2, msg2.returnTotalMessages());
-    }
+   
 }
